@@ -49,10 +49,6 @@ namespace System.Numerics.Extensions
         /// </remarks>
         private static BigInteger? GetRootByDigits(this ref BigInteger source, int exponent, bool wishExactResult = true)
         {
-            var ambiguousResultMessage = "The value of the exponent leads to an ambiguous results.";
-            if (exponent == 0) throw new ArithmeticException(ambiguousResultMessage);
-            if ((source == 0) || (source == 1)) return source;
-
             var floor = 10;
 
             var digitsShift = BigInteger.Pow(floor, exponent);
@@ -117,10 +113,6 @@ namespace System.Numerics.Extensions
         /// </remarks>S
         private static BigInteger? GetRootByNewton(this ref BigInteger source, int exponent, bool wishExactResult = true)
         {
-            var ambiguousResultMessage = "The value of the exponent leads to an ambiguous results.";
-            if (exponent == 0) throw new ArithmeticException(ambiguousResultMessage);
-            if ((source == 0) || (source == 1)) return source;
-
             var floor = 10;
 
             var quotient = (int)Math.Ceiling(BigInteger.Log(source, floor) / exponent);

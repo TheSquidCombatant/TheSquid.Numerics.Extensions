@@ -4,4 +4,5 @@ System.Numerics.Extensions.Tests/bin/
 System.Numerics.Extensions.Tests/Data/
 System.Numerics.Extensions.Tests/obj/
 TestResults/
+.vs/
 *.user
