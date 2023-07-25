@@ -16,7 +16,7 @@ namespace System.Numerics.Extensions
         /// <param name="wishExactResult">If the root is not extracted completely: False for approximate result or True for null.</param>
         /// <returns>By default, it returns the exact integer value, in case of the root is completely extracted, otherwise it returns null.</returns>
         /// <exception cref="ArithmeticException">The value of the exponent leads to an ambiguous results.</exception>
-        /// <exception cref="NotSupportedException">You don't have to pay attention to it.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Negative exponent values and negative source values are not supported.</exception>
         public static BigInteger? NthRoot(this ref BigInteger source, int exponent, bool wishExactResult = true)
         {
             const string negativeValuesMessage = "Negative exponent values and negative source values are not supported.";
