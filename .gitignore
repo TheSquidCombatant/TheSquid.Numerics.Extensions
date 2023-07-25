@@ -1,0 +1,7 @@
+System.Numerics.Extensions/bin/
+System.Numerics.Extensions/obj/
+System.Numerics.Extensions.Tests/bin/
+System.Numerics.Extensions.Tests/Data/
+System.Numerics.Extensions.Tests/obj/
+TestResults/
+*.user
