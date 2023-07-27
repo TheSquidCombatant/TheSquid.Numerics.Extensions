@@ -34,6 +34,8 @@ namespace System.Numerics.Extensions.Tests
         [DataRow(@"..\..\..\Data\Speed\23*.txt", 173, 179)]
         public void GenerateSpeedTests(string filePathTemplate, int exponentValue, int basementLength)
         {
+            var targetDirectory = Path.GetDirectoryName(filePathTemplate);
+            Directory.CreateDirectory(targetDirectory);
             var random = new Random(DateTime.Now.Millisecond);
             for (int k = 0; k < 10; ++k)
             {
