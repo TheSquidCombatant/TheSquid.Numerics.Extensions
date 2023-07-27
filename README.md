@@ -1,5 +1,5 @@
 # NthRootExtension
-C# implementation of an extension method to quickly calculate an Nth root for BigInteger value. By Nikolai TheSquid.
+C# implementation of an extension method to quickly calculate an Nth root (including square root) for BigInteger value. By Nikolai TheSquid.
 
 ## How to use
 Basicly you can copy class [NthRootExtension](System.Numerics.Extensions/NthRootExtension.cs) to your project and add using for namespace System.Numerics.Extensions.
