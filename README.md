@@ -14,5 +14,5 @@ I will be glad to merge your pull requests for improve Nth root calculation perf
 The extension method uses two root calculation algorithms: well-known Newton's method and digit-by-digit method. As the degree of the root increases, the calculation by the Newton method slows down, and the digit-by-digit method accelerates. With a root radicand value order of 100,000 decimal digits, the dependence of the calculation speed on the degree of the root is as follows:
 
 <p align="center">
-  <img src="https://github.com/TheSquidCombatant/NthRootExtension/assets/102874947/d22228b3-7198-4204-9c5b-6b09ba8dd07c.jpg"/>
+  <img width="50%" height="50%" src="https://github.com/TheSquidCombatant/NthRootExtension/assets/102874947/6d63160a-b02c-40dd-85b9-43f7b5f8c9e3.jpg"/>
 </p>
