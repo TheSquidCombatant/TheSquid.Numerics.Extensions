@@ -20,8 +20,8 @@ namespace System.Numerics.Extensions.Tests
 
             for (int i = 0; i < iterationsCount; ++i)
             {
-                var basement = (BigInteger)random.NextInt64(1, maxBasement);
-                var exponent = (int)random.NextInt64(1, maxExponent);
+                var basement = (BigInteger)random.Next(1, maxBasement);
+                var exponent = (int)random.Next(1, maxExponent);
                 var source = BigInteger.Pow(basement, exponent);
                 var actualBasement = source.NthRoot(exponent, true);
                 var actualResult = (actualBasement != null);
@@ -61,7 +61,6 @@ namespace System.Numerics.Extensions.Tests
             Assert.AreEqual(expectedBasement ?? "", actualBasement?.ToString() ?? "");
         }
 
-
         [TestMethod]
         [DataRow(@"Data\Speed\00*.txt")]
         [DataRow(@"Data\Speed\01*.txt")]
@@ -70,7 +69,7 @@ namespace System.Numerics.Extensions.Tests
         [DataRow(@"Data\Speed\04*.txt")]
         [DataRow(@"Data\Speed\05*.txt")]
         [DataRow(@"Data\Speed\06*.txt")]
-        [DataRow(@"Data\Speed\07*.txt")] 
+        [DataRow(@"Data\Speed\07*.txt")]
         [DataRow(@"Data\Speed\08*.txt")]
         [DataRow(@"Data\Speed\09*.txt")]
         [DataRow(@"Data\Speed\10*.txt")]

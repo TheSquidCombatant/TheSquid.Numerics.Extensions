@@ -39,8 +39,8 @@ namespace System.Numerics.Extensions.Tests
             var random = new Random(DateTime.Now.Millisecond);
             for (int k = 0; k < 10; ++k)
             {
-                var basementInput = random.NextInt64(1, 10).ToString();
-                for (int i = 1; i < basementLength; ++i) basementInput += random.NextInt64(0, 10).ToString();
+                var basementInput = random.Next(1, 10).ToString();
+                for (int i = 1; i < basementLength; ++i) basementInput += random.Next(0, 10).ToString();
 
                 var basement = BigInteger.Parse(basementInput);
                 var power = BigInteger.Pow(basement, exponentValue);

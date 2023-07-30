@@ -44,7 +44,7 @@ namespace System.Numerics.Extensions
             // calculate the worst-case cost for each root extraction method
             var quotient = (int)Math.Ceiling(BigInteger.Log(source, floor) / exponent);
             var digitsRootCount = (int)(0.8 * quotient * (BigInteger.Log(floor, 2) + 1));
-            var newtonRootCount = (int)(Math.Log2(BigInteger.Log(BigInteger.Pow(floor, quotient) - BigInteger.Pow(floor, quotient - 1), 2)) * exponent / 2 + 3);
+            var newtonRootCount = (int)(Math.Log(BigInteger.Log(BigInteger.Pow(floor, quotient) - BigInteger.Pow(floor, quotient - 1), 2), 2) * exponent / 2 + 3);
             // call the fastest root extraction method for current parameters
             var min = new[] { digitsRootCount, newtonRootCount }.Min();
             if (min == digitsRootCount) return GetRootByDigits(ref source, exponent, wishExactResult);
@@ -117,7 +117,7 @@ namespace System.Numerics.Extensions
                 sourceNode = sourceNode.Previous;
             }
             // return the exact value if exists, otherwise the approximate value if the user wanted it, otherwise null
-            return (isExactValue || !wishExactResult ? currentResult : null);
+            return (isExactValue || !wishExactResult ? (BigInteger?)currentResult : null);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace System.Numerics.Extensions
             // check if the last obtained approximation is the exact value of the root
             var isExactValue = (BigInteger.Pow(currentResult, exponent) == source);
             // return the exact value if exists, otherwise the approximate value if the user wanted it, otherwise null
-            return (isExactValue || !wishExactResult ? currentResult : null);
+            return (isExactValue || !wishExactResult ? (BigInteger?)currentResult : null);
         }
     }
 }
