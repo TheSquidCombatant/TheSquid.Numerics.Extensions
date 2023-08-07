@@ -47,9 +47,10 @@ namespace System.Numerics.Extensions.Tests
 
                 var dataSet = new DataSet()
                 {
-                    Basement = basement.ToString(),
                     Exponent = exponentValue.ToString(),
-                    Power = power.ToString()
+                    Basement = basement.ToString(),
+                    Power = power.ToString(),
+                    IsExactResult = true,
                 };
 
                 var filePath = filePathTemplate.Replace("*", k.ToString());
@@ -63,8 +64,9 @@ namespace System.Numerics.Extensions.Tests
 
     public class DataSet
     {
-        public string Basement { get; set; }
+        public bool IsExactResult { get; set; }
         public string Exponent { get; set; }
+        public string Basement { get; set; }
         public string Power { get; set; }
     }
 }
