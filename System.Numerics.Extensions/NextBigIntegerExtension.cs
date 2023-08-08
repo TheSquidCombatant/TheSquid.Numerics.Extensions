@@ -4,7 +4,7 @@
     /// C# implementation of an extension method to generate
     /// random BigInteger value. By Nikolai TheSquid.
     /// </summary>
-    public static partial class RandomExtension
+    public static partial class NextBigIntegerExtension
     {
         /// <summary>
         /// Random BigInteger value that is within a specified range.

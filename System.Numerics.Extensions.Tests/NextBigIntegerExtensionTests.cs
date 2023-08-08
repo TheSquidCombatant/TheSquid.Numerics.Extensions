@@ -4,7 +4,7 @@ using System.Text;
 namespace System.Numerics.Extensions.Tests
 {
     [TestClass]
-    public class RandomExtensionTests
+    public class NextBigIntegerExtensionTests
     {
         [TestMethod]
         [DataRow(100, 10000)]
@@ -12,7 +12,7 @@ namespace System.Numerics.Extensions.Tests
         [DataRow(10000, 100)]
         [DataRow(100000, 10)]
         [DataRow(1000000, 1)]
-        public void RandomRandomTest(int iterationsCount, int borderValueLength)
+        public void NextBigIntegerRandomTest(int iterationsCount, int borderValueLength)
         {
             var random = new Random(DateTime.Now.Millisecond);
 
