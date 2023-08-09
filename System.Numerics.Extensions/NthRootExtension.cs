@@ -10,7 +10,7 @@ namespace System.Numerics.Extensions
     public static partial class NthRootExtension
     {
         /// <summary>
-        /// Nth root for big non negative integer values.
+        /// Nth root for non negative BigInteger values.
         /// </summary>
         /// <param name="source">
         /// Root radicand value.
@@ -18,11 +18,11 @@ namespace System.Numerics.Extensions
         /// <param name="exponent">
         /// Root degree value.
         /// </param>
-        /// <param name="wishExactResult">
-        /// If the root is not extracted completely: False for approximate result or True for null.
+        /// <param name="isExactResult">
+        /// True value for exact result or False value for approximate result.
         /// </param>
         /// <returns>
-        /// By default, it returns the exact integer value, in case of the root is completely extracted, otherwise it returns null.
+        /// It returns the exact value, in case of the root is completely extracted, otherwise it returns nearest value from below.
         /// </returns>
         /// <exception cref="ArithmeticException">
         /// The value of the exponent leads to an ambiguous results.
@@ -30,7 +30,7 @@ namespace System.Numerics.Extensions
         /// <exception cref="ArgumentOutOfRangeException">
         /// Negative exponent values and negative source values are not supported.
         /// </exception>
-        public static BigInteger? NthRoot(this ref BigInteger source, int exponent, bool wishExactResult = true)
+        public static BigInteger NthRoot(this ref BigInteger source, int exponent, out bool isExactResult)
         {
             // validation of input parameter values
             const string negativeValuesMessage = "Negative exponent values and negative source values are not supported.";
@@ -38,6 +38,7 @@ namespace System.Numerics.Extensions
             const string ambiguousResultMessage = "The value of the exponent leads to an ambiguous results.";
             if (exponent == 0) throw new ArithmeticException(ambiguousResultMessage);
             // stub for the case of trivial values of the radical expression
+            isExactResult = true;
             if ((source == 0) || (source == 1)) return source;
             // base of the numeral system, the value 10 is best for traceability and easу debugging
             var floor = 10;
@@ -47,8 +48,8 @@ namespace System.Numerics.Extensions
             var newtonRootCount = (int)(Math.Log(BigInteger.Log(BigInteger.Pow(floor, quotient) - BigInteger.Pow(floor, quotient - 1), 2), 2) * exponent / 2 + 3);
             // call the fastest root extraction method for current parameters
             var min = new[] { digitsRootCount, newtonRootCount }.Min();
-            if (min == digitsRootCount) return GetRootByDigits(ref source, exponent, wishExactResult);
-            if (min == newtonRootCount) return GetRootByNewton(ref source, exponent, wishExactResult);
+            if (min == digitsRootCount) return GetRootByDigits(ref source, exponent, out isExactResult);
+            if (min == newtonRootCount) return GetRootByNewton(ref source, exponent, out isExactResult);
             // stub if something went wrong when extending the functionality
             const string notSupportedMethodMessage = "Not supported nthroot calculation method.";
             throw new NotSupportedException(notSupportedMethodMessage);
@@ -60,7 +61,7 @@ namespace System.Numerics.Extensions
         /// <remarks>
         /// Digit-by-digit extraction method.
         /// </remarks>
-        private static BigInteger? GetRootByDigits(this ref BigInteger source, int exponent, bool wishExactResult = true)
+        private static BigInteger GetRootByDigits(this ref BigInteger source, int exponent, out bool isExactResult)
         {
             // calculate how many digits of accuracy are cut off from the radicand value for each digit of root value
             var floor = 10;
@@ -75,9 +76,9 @@ namespace System.Numerics.Extensions
                 intermediateResults.AddLast(currentSource);
             }
             // initial setting for the digits-by-digits root extraction method
+            isExactResult = false;
             var minResult = new BigInteger(1);
             var maxResult = new BigInteger(floor);
-            var isExactValue = false;
             var sourceNode = intermediateResults.Last;
             BigInteger currentResult = 0, currentPower = 0;
             // looking for the root one by one digit starting from the most significant digit
@@ -85,14 +86,14 @@ namespace System.Numerics.Extensions
             {
                 // initial setting for the current iteration of digits-by-digits extraction
                 currentSource = sourceNode.Value;
-                isExactValue = false;
+                isExactResult = false;
                 // followed by an optional, but almost zero-cost optimization
                 if (sourceNode != intermediateResults.Last)
                 {
                     // use data from previous iteration
                     currentResult *= floor;
                     currentPower *= digitsShift;
-                    // build a tangent to the point of the previous root value
+                    // build a tangent (y=k*x+b) to the point of the previous root value 
                     var k = exponent * currentPower / currentResult;
                     var b = currentPower - k * currentResult;
                     var x = (currentSource - b) / k + 1;
@@ -101,12 +102,12 @@ namespace System.Numerics.Extensions
                 }
                 // initial setting for the binary search method
                 currentResult = (minResult + maxResult) / 2;
-                BigInteger? previousResult = null;
+                BigInteger previousResult = 0;
                 // looking for the new last digit of the root using the binary search
                 while (previousResult != currentResult)
                 {
                     currentPower = BigInteger.Pow(currentResult, exponent);
-                    if (currentPower == currentSource) { isExactValue = true; break; }
+                    if (currentPower == currentSource) { isExactResult = true; break; }
                     previousResult = currentResult;
                     if (currentPower < currentSource) minResult = currentResult; else maxResult = currentResult;
                     currentResult = (minResult + maxResult) / 2;
@@ -116,8 +117,8 @@ namespace System.Numerics.Extensions
                 maxResult = (currentResult + 1) * floor;
                 sourceNode = sourceNode.Previous;
             }
-            // return the exact value if exists, otherwise the approximate value if the user wanted it, otherwise null
-            return (isExactValue || !wishExactResult ? (BigInteger?)currentResult : null);
+            // return accumulated root value
+            return currentResult;
         }
 
         /// <summary>
@@ -126,27 +127,29 @@ namespace System.Numerics.Extensions
         /// <remarks>
         /// By Newton simplest extraction method.
         /// </remarks>
-        private static BigInteger? GetRootByNewton(this ref BigInteger source, int exponent, bool wishExactResult = true)
+        private static BigInteger GetRootByNewton(this ref BigInteger source, int exponent, out bool isExactResult)
         {
-            // calculate the initial guess the root value with accuracy up to last digit
+            // calculate the initial guess (equal or greater) the root value with accuracy up to one digit
             var floor = 10;
             var quotient = (int)Math.Ceiling(BigInteger.Log(source, floor) / exponent);
             var currentResult = BigInteger.Pow(floor, quotient);
             // initial setting for applying Newton's method
-            BigInteger? previousPreviousResult = null;
-            BigInteger? previousResult = null;
+            BigInteger previousResult = 0;
+            BigInteger delta = 0;
             // looking for the root by averaging the maximum and minimum values by Newton's method
-            while ((previousResult != currentResult) && (previousPreviousResult != currentResult))
+            while ((previousResult != currentResult) && (delta >= 0))
             {
                 var counterweight = BigInteger.Pow(currentResult, (exponent - 1));
-                previousPreviousResult = previousResult;
                 previousResult = currentResult;
                 currentResult = (((exponent - 1) * currentResult) + (source / counterweight)) / exponent;
+                delta = previousResult - currentResult;
             }
+            // on any condition loop end, previousResult contains the desired value
+            currentResult = previousResult;
             // check if the last obtained approximation is the exact value of the root
-            var isExactValue = (BigInteger.Pow(currentResult, exponent) == source);
-            // return the exact value if exists, otherwise the approximate value if the user wanted it, otherwise null
-            return (isExactValue || !wishExactResult ? (BigInteger?)currentResult : null);
+            isExactResult = (BigInteger.Pow(currentResult, exponent) == source);
+            // return accumulated root value
+            return currentResult;
         }
     }
 }
