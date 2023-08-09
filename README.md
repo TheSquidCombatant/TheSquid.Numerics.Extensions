@@ -1,5 +1,7 @@
 # System.Numerics.Extensions
-C# implementation of extension methods for BigInteger data type. Such as extracting an Nth root, generating a random value, and so on. By Nikolai TheSquid. I will be glad to merge your pull requests for improve calculation performance. Even if the improvement affects only individual cases from the range of values.
+C# implementation of extension methods for BigInteger data type. Such as extracting an Nth root, generating a random value, and so on. By Nikolai TheSquid.
+
+I will be glad to merge your pull requests for improve calculation performance. Even if the improvement affects only individual cases from the range of values.
 
 ## NthRootExtension
 C# implementation of an extension method to quickly calculate an Nth root (including square root) for BigInteger value.
