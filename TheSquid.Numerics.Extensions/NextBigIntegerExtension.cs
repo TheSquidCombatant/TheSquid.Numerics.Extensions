@@ -1,4 +1,7 @@
-﻿namespace System.Numerics
+﻿using System;
+using System.Numerics;
+
+namespace TheSquid.Numerics
 {
     /// <summary>
     /// C# implementation of an extension method to generate

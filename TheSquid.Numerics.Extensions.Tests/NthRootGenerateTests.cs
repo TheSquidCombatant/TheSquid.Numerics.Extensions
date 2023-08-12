@@ -1,8 +1,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using System;
 using System.IO;
+using System.Numerics;
 
-namespace System.Numerics.Extensions.Tests
+namespace TheSquid.Numerics.Tests
 {
     [TestClass]
     public class NthRootGenerateTests

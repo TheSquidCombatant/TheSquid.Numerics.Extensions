@@ -1,8 +1,8 @@
-System.Numerics.Extensions/bin/
-System.Numerics.Extensions/obj/
-System.Numerics.Extensions.Tests/bin/
-System.Numerics.Extensions.Tests/Data/
-System.Numerics.Extensions.Tests/obj/
+TheSquid.Numerics.Extensions/bin/
+TheSquid.Numerics.Extensions/obj/
+TheSquid.Numerics.Extensions.Tests/bin/
+TheSquid.Numerics.Extensions.Tests/Data/
+TheSquid.Numerics.Extensions.Tests/obj/
 TestResults/
 .vs/
 *.user
