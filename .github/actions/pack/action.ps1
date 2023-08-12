@@ -26,12 +26,12 @@ Write-Output "Action started:
     branch=$branch
     commit=$commit
     about=$about"
-# try get information about repository
+# try to get about repository
 if (!$about)
 {
     $repositoryPath = "$builds\$repository\$version\$repository"
     Set-Location $repositoryPath
-    Invoke-Expression "`"$token`" | gh auth login --with-token"
+    $token | gh auth login --with-token
     $outputGithub = gh repo view | Out-String
     if (!$lastExitCode)
     {
