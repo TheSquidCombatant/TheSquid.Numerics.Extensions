@@ -1,0 +1,23 @@
+name: build
+description: 'Builds .net project.'
+outputs:
+  version:
+    value: ${{ steps.action.outputs.version }}
+runs:
+  using: "composite"
+  steps:
+    - shell: pwsh
+      id: action
+      run: |
+        if ("${{ github.ref_type }}" -eq "tag") { $branch = "main" } else { $branch = "${{ github.ref_name }}" }
+        . "${{ github.action_path }}/action.ps1"
+        Build `
+            -revision "${{ github.run_id }}" `
+            -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}/", "") `
+            -project "TheSquid.Numerics.Extensions" `
+            -owner "${{ github.repository_owner }}" `
+            -branch $branch `
+            -commit "${{ github.sha }}" `
+            -token "${{ github.token }}"
+        Add-Content -Path "$env:GITHUB_OUTPUT" -Value "version=$env:version"
+        if ($env:success) { exit 0 } else { exit 1 }
