@@ -9,8 +9,8 @@ runs:
     - shell: pwsh
       run: |
         if ("${{ github.ref_type }}" -eq "tag") { $branch = "main" } else { $branch = "${{ github.ref_name }}" }
-        powershell.exe `
-            -File "${{ github.action_path }}/action.ps1" `
+        . "${{ github.action_path }}/action.ps1"
+        Pack `
             -version ${{ inputs.version }} `
             -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}/", "") `
             -project "TheSquid.Numerics.Extensions" `

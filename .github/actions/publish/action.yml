@@ -8,8 +8,8 @@ runs:
   steps:
     - shell: pwsh
       run: |
-        powershell.exe `
-            -File "${{ github.action_path }}/action.ps1" `
+        . "${{ github.action_path }}/action.ps1"
+        Publish `
             -version ${{ inputs.version }} `
             -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}/", "") `
             -project "TheSquid.Numerics.Extensions" `
