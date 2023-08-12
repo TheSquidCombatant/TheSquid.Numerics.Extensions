@@ -14,5 +14,5 @@ runs:
             -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}/", "") `
             -project "TheSquid.Numerics.Extensions.Tests" `
             -methods "NthRootRandomTest|NextBigIntegerRandomTest"
-        Add-Content -Path "$GITHUB_OUTPUT" -Value "version=$env:version"
+        Add-Content -Path "$env:GITHUB_OUTPUT" -Value "version=$env:version"
         if ($env:success) { exit 0 } else { exit 1 }
