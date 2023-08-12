@@ -18,6 +18,5 @@ runs:
             -branch $branch `
             -commit "${{ github.sha }}" `
             -token "${{ github.token }}"
-        echo "version=$env:version" >> "$GITHUB_OUTPUT"
-        echo "success=$env:success"
+        Add-Content "$GITHUB_OUTPUT" -Value "version=$env:version"
         if ($env:success) { exit 0 } else { exit 1 }
