@@ -1,5 +1,8 @@
 name: build
 description: 'Builds .net project.'
+inputs:
+  project:
+    required: true
 outputs:
   version:
     value: ${{ steps.action.outputs.version }}
@@ -14,7 +17,7 @@ runs:
         Build `
             -revision "${{ github.run_id }}" `
             -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}/", "") `
-            -project "TheSquid.Numerics.Extensions" `
+            -project "${{ inputs.project }}" `
             -owner "${{ github.repository_owner }}" `
             -branch $branch `
             -commit "${{ github.sha }}" `

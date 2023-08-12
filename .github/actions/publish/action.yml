@@ -3,6 +3,16 @@ description: 'Delivery nuget package.'
 inputs:
   version:
     required: true
+  project:
+    required: true
+  packageGalleryNugetURL:
+    required: true
+  packageGalleryNugetKey:
+    required: true
+  packageGalleryGithubURL:
+    required: true
+  packageGalleryGithubKey:
+    required: true
 runs:
   using: "composite"
   steps:
@@ -10,12 +20,12 @@ runs:
       run: |
         . "${{ github.action_path }}/action.ps1"
         Publish `
-            -version ${{ inputs.version }} `
+            -version "${{ inputs.version }}" `
             -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}/", "") `
-            -project "TheSquid.Numerics.Extensions" `
-            -packageGalleryNugetURL "${{ vars.PACKAGE_GALLERY_URL_NUGET }}" `
-            -packageGalleryNugetKey "${{ secrets.PACKAGE_GALLERY_KEY_NUGET }}" `
-            -packageGalleryGithubURL "${{ vars.PACKAGE_GALLERY_URL_GITHUB }}" `
-            -packageGalleryGithubKey "${{ secrets.PACKAGE_GALLERY_KEY_GITHUB }}"
+            -project "${{ inputs.project }}" `
+            -packageGalleryNugetURL "${{ inputs.packageGalleryNugetURL }}" `
+            -packageGalleryNugetKey "${{ inputs.packageGalleryNugetKey }}" `
+            -packageGalleryGithubURL "${{ inputs.packageGalleryGithubURL }}" `
+            -packageGalleryGithubKey "${{ inputs.packageGalleryGithubKey }}"
         Add-Content -Path "$env:GITHUB_OUTPUT" -Value "version=$env:version"
         if ($env:success) { exit 0 } else { exit 1 }

@@ -3,6 +3,8 @@ description: 'Create nuget package.'
 inputs:
   version:
     required: true
+  project:
+    required: true
 runs:
   using: "composite"
   steps:
@@ -11,9 +13,9 @@ runs:
         if ("${{ github.ref_type }}" -eq "tag") { $branch = "main" } else { $branch = "${{ github.ref_name }}" }
         . "${{ github.action_path }}/action.ps1"
         Pack `
-            -version ${{ inputs.version }} `
+            -version "${{ inputs.version }}" `
             -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}/", "") `
-            -project "TheSquid.Numerics.Extensions" `
+            -project "${{ inputs.project }}" `
             -owner "${{ github.repository_owner }}" `
             -branch $branch `
             -commit "${{ github.sha }}" `

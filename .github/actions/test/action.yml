@@ -3,6 +3,8 @@ description: 'Test .net project.'
 inputs:
   version:
     required: true
+  project:
+    required: true
 runs:
   using: "composite"
   steps:
@@ -10,9 +12,9 @@ runs:
       run: |
         . "${{ github.action_path }}/action.ps1"
         Test `
-            -version ${{ inputs.version }} `
+            -version "${{ inputs.version }}" `
             -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}/", "") `
-            -project "TheSquid.Numerics.Extensions.Tests" `
+            -project "${{ inputs.project }}" `
             -methods "NthRootRandomTest|NextBigIntegerRandomTest"
         Add-Content -Path "$env:GITHUB_OUTPUT" -Value "version=$env:version"
         if ($env:success) { exit 0 } else { exit 1 }
