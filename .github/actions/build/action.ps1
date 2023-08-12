@@ -47,6 +47,10 @@ else
     $major = 0
     $minor = 0
 }
+# to prevent overflow in roslyn compiler
+$major = $major % $maxVersionValue
+$minor = $minor % $maxVersionValue
+$revision = $revision % $maxVersionValue
 # define revision and build version parts
 for ($build=1; $build -le $maxVersionValue; $build++)
 {
@@ -54,11 +58,6 @@ for ($build=1; $build -le $maxVersionValue; $build++)
     $exists = Test-Path $buildPath
     if(!$exists) { break }
 }
-# to prevent overflow in roslyn compiler
-$major = $major % $maxVersionValue
-$minor = $minor % $maxVersionValue
-$revision = $revision % $maxVersionValue
-$build = $build % $maxVersionValue
 # create build folder and move here
 if (Test-Path $buildPath) { Remove-Item $buildPath -Recurse -Force }
 Copy-Item -Path $tempPath -Destination $buildPath -Recurse
