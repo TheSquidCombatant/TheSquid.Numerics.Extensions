@@ -1,4 +1,4 @@
-# System.Numerics.Extensions
+# TheSquid.Numerics.Extensions
 C# implementation of extension methods for BigInteger data type. Such as extracting an Nth root, generating a random value, and so on. By Nikolai TheSquid.
 
 I will be glad to merge your pull requests for improve calculation performance. Even if the improvement affects only individual cases from the range of values.
@@ -7,7 +7,7 @@ I will be glad to merge your pull requests for improve calculation performance. 
 C# implementation of an extension method to quickly calculate an Nth root (including square root) for BigInteger value.
 
 ### How to use
-Basicly you can copy class [NthRootExtension](System.Numerics.Extensions/NthRootExtension.cs) to your project and add using for namespace System.Numerics.Extensions.
+Basicly you can copy class [NthRootExtension](TheSquid.Numerics.Extensions/NthRootExtension.cs) to your project and add using for namespace TheSquid.Numerics.Extensions.
 
 ### How to test
 You can start random NthRoot tests right after clone repository and build solution. You must run generate tests and rebuild solution before start speed Nth root tests.
@@ -20,13 +20,13 @@ The extension method uses two root calculation algorithms: well-known Newton's m
 </p>
 
 ## NextBigIntegerExtension
-C# implementation of an extension method to generate random BigInteger value.
+C# implementation of an extension method to generate random BigInteger value within the specified range.
 
 ### How to use
-Basicly you can copy class [NextBigIntegerExtension](System.Numerics.Extensions/NextBigIntegerExtension.cs) to your project and add using for namespace System.Numerics.Extensions.
+Basicly you can copy class [NextBigIntegerExtension](TheSquid.Numerics.Extensions/NextBigIntegerExtension.cs) to your project and add using for namespace TheSquid.Numerics.Extensions.
 
 ### How to test
-You can start random NextBigInteger tests from project System.Numerics.Extensions. Tests right after clone repository and build solution.
+You can start random NextBigInteger tests from project TheSquid.Numerics.Extensions.Tests right after clone repository and build solution.
 
 ### How to understand
 Extension method for the system class Random. Method uses instance of Random class to generate an array of random bytes.

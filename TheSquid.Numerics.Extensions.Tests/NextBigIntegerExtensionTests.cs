@@ -1,7 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Numerics;
 using System.Text;
 
-namespace System.Numerics.Extensions.Tests
+namespace TheSquid.Numerics.Tests
 {
     [TestClass]
     public class NextBigIntegerExtensionTests

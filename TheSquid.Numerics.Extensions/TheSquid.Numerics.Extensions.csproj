@@ -3,8 +3,9 @@
 	<PropertyGroup>
 		<LangVersion>7.3</LangVersion>
 		<TargetFramework>netstandard2.0</TargetFramework>
+		<PackageTags>BigInteger;Nth;Root;Random</PackageTags>
 	</PropertyGroup>
-	
+
 	<PropertyGroup>
 		<PackageIcon>logo.png</PackageIcon>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -16,5 +17,5 @@
 		<None Include="..\LICENSE" Pack="true" PackagePath="\" />
 		<None Include="..\readme.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
-	
+
 </Project>

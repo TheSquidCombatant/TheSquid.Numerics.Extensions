@@ -24,7 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\System.Numerics.Extensions\System.Numerics.Extensions.csproj" />
+		<ProjectReference Include="..\TheSquid.Numerics.Extensions\TheSquid.Numerics.Extensions.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
-namespace System.Numerics.Extensions
+namespace TheSquid.Numerics
 {
     /// <summary>
     /// C# implementation of an extension method to quickly calculate an Nth root
