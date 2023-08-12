@@ -12,7 +12,7 @@ runs:
             -File "${{ github.action_path }}/action.ps1" `
             -version ${{ inputs.version }} `
             -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}/", "") `
-            -project "System.Numerics.Extensions.Tests" `
+            -project "TheSquid.Numerics.Extensions.Tests" `
             -methods "NthRootRandomTest|NextBigIntegerRandomTest"
         echo "version=$env:version" >> "$GITHUB_OUTPUT"
         if ($env:success) { exit 0 } else { exit 1 }

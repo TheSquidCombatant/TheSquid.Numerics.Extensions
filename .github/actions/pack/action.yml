@@ -13,7 +13,7 @@ runs:
             -File "${{ github.action_path }}/action.ps1" `
             -version ${{ inputs.version }} `
             -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}/", "") `
-            -project "System.Numerics.Extensions" `
+            -project "TheSquid.Numerics.Extensions" `
             -owner "${{ github.repository_owner }}" `
             -branch $branch `
             -commit "${{ github.sha }}" `

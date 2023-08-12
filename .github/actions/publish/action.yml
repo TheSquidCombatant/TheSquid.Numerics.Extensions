@@ -12,7 +12,7 @@ runs:
             -File "${{ github.action_path }}/action.ps1" `
             -version ${{ inputs.version }} `
             -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}/", "") `
-            -project "System.Numerics.Extensions" `
+            -project "TheSquid.Numerics.Extensions" `
             -packageGalleryNugetURL "${{ vars.PACKAGE_GALLERY_URL_NUGET }}" `
             -packageGalleryNugetKey "${{ secrets.PACKAGE_GALLERY_KEY_NUGET }}" `
             -packageGalleryGithubURL "${{ vars.PACKAGE_GALLERY_URL_GITHUB }}" `
