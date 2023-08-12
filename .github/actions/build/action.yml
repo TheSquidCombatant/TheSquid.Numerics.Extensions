@@ -9,7 +9,7 @@ runs:
     - shell: pwsh
       id: action
       run: |
-        powershell.exe
+        powershell.exe `
             -File "${{ github.action_path }}/action.ps1" `
             -revision "${{ github.run_id }}" `
             -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}\", "") `
