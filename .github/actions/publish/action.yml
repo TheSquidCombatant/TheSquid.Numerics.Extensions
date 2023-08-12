@@ -17,5 +17,5 @@ runs:
             -packageGalleryNugetKey "${{ secrets.PACKAGE_GALLERY_KEY_NUGET }}" `
             -packageGalleryGithubURL "${{ vars.PACKAGE_GALLERY_URL_GITHUB }}" `
             -packageGalleryGithubKey "${{ secrets.PACKAGE_GALLERY_KEY_GITHUB }}"
-        Add-Content "$GITHUB_OUTPUT" -Value "version=$env:version"
+        Add-Content -Path "$GITHUB_OUTPUT" -Value "version=$env:version"
         if ($env:success) { exit 0 } else { exit 1 }
