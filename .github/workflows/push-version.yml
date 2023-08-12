@@ -1,0 +1,24 @@
+name: push-tag-github-actions
+run-name: push-tag-github-actions
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+'
+jobs:
+  processing:
+    runs-on: self-hosted
+    steps:
+      - id: build
+        uses: ./.github/actions/build
+      - id: test
+        uses: ./.github/actions/test
+        with:
+          version: ${{ steps.build.outputs.version }}
+      - id: pack
+        uses: ./.github/actions/pack
+        with:
+          version: ${{ steps.build.outputs.version }}
+      - id: publish
+        uses: ./.github/actions/publish
+        with:
+          version: ${{ steps.build.outputs.version }}

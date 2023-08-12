@@ -1,0 +1,20 @@
+name: pack
+description: 'Create nuget package.'
+inputs:
+  version:
+    required: true
+runs:
+  steps:
+    - shell: pwsh
+      run: |
+        powershell.exe
+            -File "${{ github.action_path }}/action.ps1" `
+            -version ${{ inputs.version }} `
+            -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}\", "")
+            -project "System.Numerics.Extensions" `
+            -owner "${{ github.repository_owner }}" `
+            -branch "${{ github.event.base_ref }}" `
+            -commit "${{ github.sha }}" `
+            -token "${{ github.token }}"
+        echo "version=$env:version" >> "$GITHUB_OUTPUT"
+        if ($env:success) { exit 0 } else { exit 1 }

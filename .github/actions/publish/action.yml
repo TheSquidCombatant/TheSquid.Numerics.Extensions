@@ -1,0 +1,20 @@
+name: publish
+description: 'Delivery nuget package.'
+inputs:
+  version:
+    required: true
+runs:
+  steps:
+    - shell: pwsh
+      run: |
+        powershell.exe
+            -File "${{ github.action_path }}/action.ps1" `
+            -version ${{ inputs.version }} `
+            -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}\", "")
+            -project "System.Numerics.Extensions" `
+            -packageGalleryNugetURL "${{ vars.PACKAGE_GALLERY_URL_NUGET }}" `
+            -packageGalleryNugetKey "${{ secrets.PACKAGE_GALLERY_KEY_NUGET }}" `
+            -packageGalleryGithubURL "${{ vars.PACKAGE_GALLERY_URL_GITHUB }}" `
+            -packageGalleryGithubKey "${{ secrets.PACKAGE_GALLERY_KEY_GITHUB }}"
+        echo "version=$env:version" >> "$GITHUB_OUTPUT"
+        if ($env:success) { exit 0 } else { exit 1 }

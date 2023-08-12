@@ -1,0 +1,21 @@
+name: build
+description: 'Builds .net project.'
+outputs:
+  version:
+    value: ${{ steps.action.outputs.version }}
+runs:
+  steps:
+    - shell: pwsh
+      id: action
+      run: |
+        powershell.exe
+            -File "${{ github.action_path }}/action.ps1" `
+            -revision "${{ github.run_id }}" `
+            -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}\", "") `
+            -project "System.Numerics.Extensions" `
+            -owner "${{ github.repository_owner }}" `
+            -branch "${{ github.event.base_ref }}" `
+            -commit "${{ github.sha }}" `
+            -token "${{ github.token }}"
+        echo "version=$env:version" >> "$GITHUB_OUTPUT"
+        if ($env:success) { exit 0 } else { exit 1 }
