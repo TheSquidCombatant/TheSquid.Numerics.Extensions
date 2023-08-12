@@ -4,6 +4,7 @@ inputs:
   version:
     required: true
 runs:
+  using: "composite"
   steps:
     - shell: pwsh
       run: |

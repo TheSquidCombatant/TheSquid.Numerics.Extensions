@@ -4,6 +4,7 @@ outputs:
   version:
     value: ${{ steps.action.outputs.version }}
 runs:
+  using: "composite"
   steps:
     - shell: pwsh
       id: action
