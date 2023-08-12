@@ -8,6 +8,8 @@ jobs:
   processing:
     runs-on: self-hosted
     steps:
+      - id: checkout
+        uses: actions/checkout@v3
       - id: build
         uses: ./.github/actions/build
       - id: test
