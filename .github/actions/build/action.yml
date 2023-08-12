@@ -9,7 +9,7 @@ runs:
     - shell: pwsh
       id: action
       run: |
-        if (${{ github.ref_type }} -eq "tag") { $branch = "main" } else { $branch = ${{ github.ref_name }} }
+        if ("${{ github.ref_type }}" -eq "tag") { $branch = "main" } else { $branch = "${{ github.ref_name }}" }
         powershell.exe `
             -File "${{ github.action_path }}/action.ps1" `
             -revision "${{ github.run_id }}" `
