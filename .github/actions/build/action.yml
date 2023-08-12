@@ -20,4 +20,5 @@ runs:
             -commit "${{ github.sha }}" `
             -token "${{ github.token }}"
         echo "version=$env:version" >> "$GITHUB_OUTPUT"
+        echo "success=$env:success"
         if ($env:success) { exit 0 } else { exit 1 }

@@ -18,4 +18,5 @@ runs:
             -packageGalleryGithubURL "${{ vars.PACKAGE_GALLERY_URL_GITHUB }}" `
             -packageGalleryGithubKey "${{ secrets.PACKAGE_GALLERY_KEY_GITHUB }}"
         echo "version=$env:version" >> "$GITHUB_OUTPUT"
+        echo "success=$env:success"
         if ($env:success) { exit 0 } else { exit 1 }
