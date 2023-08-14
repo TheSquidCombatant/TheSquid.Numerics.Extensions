@@ -13,7 +13,7 @@ namespace TheSquid.Numerics.Tests
         [DataRow(100000, 100, 1000)]
         [DataRow(100000, 1000, 100)]
         [DataRow(10000, 1000, 1000)]
-        public void PowChachedRandomTest(int iterationsCount, int maxBasement, int maxExponent)
+        public void PowCachedRandomTest(int iterationsCount, int maxBasement, int maxExponent)
         {
             var random = new Random(DateTime.Now.Millisecond);
             var stopwatchPow = new Stopwatch();
@@ -29,11 +29,11 @@ namespace TheSquid.Numerics.Tests
                 stopwatchPow.Stop();
 
                 stopwatchPowCached.Start();
-                var powChached = basement.PowChached(exponent);
+                var powCached = basement.PowCached(exponent);
                 stopwatchPowCached.Stop();
 
-                var messagePow = $"pow={pow}\npowChached={powChached}";
-                Assert.IsTrue(pow == powChached, messagePow);
+                var messagePow = $"pow={pow}\npowCached={powCached}";
+                Assert.IsTrue(pow == powCached, messagePow);
             }
 
             var powElapsed = stopwatchPow.ElapsedMilliseconds;

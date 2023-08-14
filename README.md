@@ -38,7 +38,7 @@ C# implementation of an extension method for calculating powers of repeating Big
 Basicly you can copy class [PowCachedExtension](TheSquid.Numerics.Extensions/PowCachedExtension.cs) to your project and add using for namespace TheSquid.Numerics.Extensions.
 
 ### How to test
-You can start random PowChached tests from project TheSquid.Numerics.Extensions.Tests right after clone repository and build solution.
+You can start random PowCached tests from project TheSquid.Numerics.Extensions.Tests right after clone repository and build solution.
 
 ### How to understand
 Acceleration is achieved by memorizing the results of calculating the degrees, as well as memorizing the intermediate results obtained in this case.

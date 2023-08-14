@@ -58,24 +58,24 @@ namespace TheSquid.Numerics
         /// <returns>
         /// The result of raising <param name="basement"> to the <param name="exponent"> power.
         /// </returns>
-        public static BigInteger PowChached(this ref BigInteger basement, int exponent)
+        public static BigInteger PowCached(this ref BigInteger basement, int exponent)
         {
             try
             {
                 if (itemCounter >= int.MaxValue) ShrinkCacheData(itemCounter / 2);
-                return PowChachedInner(ref basement, exponent);
+                return PowCachedInner(ref basement, exponent);
             }
             catch (OutOfMemoryException)
             {
                 if (powCache.Count > 0) ShrinkCacheData(0);
-                return PowChachedInner(ref basement, exponent);
+                return PowCachedInner(ref basement, exponent);
             }
         }
 
         /// <summary>
         /// Exponentiation method for inner call with no protection.
         /// </summary>
-        private static BigInteger PowChachedInner(ref BigInteger basement, int exponent)
+        private static BigInteger PowCachedInner(ref BigInteger basement, int exponent)
         {
             if (TryGetValue(ref basement, exponent, out var power)) return power;
             power = CalculateNewValue(ref basement, exponent);
