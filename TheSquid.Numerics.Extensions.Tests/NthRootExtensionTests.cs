@@ -28,9 +28,9 @@ namespace TheSquid.Numerics.Tests
                 var expectedExactResult = ((source == sourceLess) || (source == sourceGreater));
                 var expectedBasement = (source == sourceGreater ? basementGreater : basementLess);
                 var actualBasement = source.NthRoot(exponent, out var actualExactResult);
-                var message = $"exponent={exponent}, source={source}, basement={expectedBasement}, isExactResult={expectedExactResult}";
-                Assert.AreEqual(expectedExactResult, actualExactResult, message);
-                Assert.AreEqual(expectedBasement, actualBasement, message);
+                const string message = "exponent={0}, source={1}, basement={2}, isExactResult={3}";
+                Assert.AreEqual(expectedExactResult, actualExactResult, message, exponent, source, expectedBasement, expectedExactResult);
+                Assert.AreEqual(expectedBasement, actualBasement, message, exponent, source, expectedBasement, expectedExactResult);
             }
         }
 
@@ -73,9 +73,9 @@ namespace TheSquid.Numerics.Tests
                 var isExactResult = dataSet.IsExactResult;
 
                 var actualBasement = source.NthRoot(exponent, out var actualExactResult);
-                var message = $"exponent={exponent}, source={source}, basement={basement}, isExactResult={isExactResult}";
-                Assert.AreEqual(isExactResult, actualExactResult, message);
-                Assert.AreEqual(basement, actualBasement, message);
+                const string message = "exponent={0}, source={1}, basement={2}, isExactResult={3}";
+                Assert.AreEqual(isExactResult, actualExactResult, message, exponent, source, basement, isExactResult);
+                Assert.AreEqual(basement, actualBasement, message, exponent, source, basement, isExactResult);
             }
         }
     }

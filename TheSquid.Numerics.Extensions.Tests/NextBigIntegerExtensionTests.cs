@@ -42,9 +42,9 @@ namespace TheSquid.Numerics.Tests
                 }
 
                 var result = random.NextBigInteger(min, max);
-                var message = $"min={min}, max={max}, result={result}";
-                Assert.IsTrue(min <= result, message);
-                Assert.IsTrue(result <= max, message);
+                const string message = "min={0}, max={1}, result={2}";
+                Assert.IsTrue(min <= result, message, min, max, result);
+                Assert.IsTrue(result <= max, message, min, max, result);
             }
         }
     }
