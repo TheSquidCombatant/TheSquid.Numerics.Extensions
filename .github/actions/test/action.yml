@@ -15,6 +15,6 @@ runs:
             -version "${{ inputs.version }}" `
             -repository "${{ github.repository }}".Replace("${{ github.repository_owner }}/", "") `
             -project "${{ inputs.project }}" `
-            -methods "NthRootRandomTest|NextBigIntegerRandomTest"
+            -methods "NthRootRandomTest|NextBigIntegerRandomTest|PowChachedRandomTest"
         Add-Content -Path "$env:GITHUB_OUTPUT" -Value "version=$env:version"
         if ($env:success) { exit 0 } else { exit 1 }
