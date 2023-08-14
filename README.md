@@ -1,5 +1,5 @@
 # TheSquid.Numerics.Extensions
-[![GitHub Status](https://img.shields.io/github/actions/workflow/status/TheSquidCombatant/TheSquid.Numerics.Extensions/push-version.yml)](https://github.com/TheSquidCombatant/TheSquid.Numerics.Extensions)
+[![GitHub Status](https://img.shields.io/github/actions/workflow/status/TheSquidCombatant/TheSquid.Numerics.Extensions/push-main-not-version.yml)](https://github.com/TheSquidCombatant/TheSquid.Numerics.Extensions)
 [![NuGet Version](http://img.shields.io/nuget/v/TheSquid.Numerics.Extensions.svg?style=flat&color=green)](https://www.nuget.org/packages/TheSquid.Numerics.Extensions/)
 
 C# implementation of extension methods for BigInteger data type. Such as extracting an Nth root, generating a random value, and so on. By Nikolai TheSquid.
@@ -10,7 +10,7 @@ I will be glad to merge your pull requests for improve calculation performance. 
 C# implementation of an extension method to quickly calculate an Nth root (including square root) for BigInteger value.
 
 ### How to use
-Basicly you can copy class [NthRootExtension](TheSquid.Numerics.Extensions/NthRootExtension.cs) to your project and add using for namespace TheSquid.Numerics.Extensions.
+Basicly you can copy class [NthRootExtension](TheSquid.Numerics.Extensions/NthRootExtension.cs) to your project and add using namespace TheSquid.Numerics.Extensions. Another option is to add the "TheSquid.Numerics.Extensions" package from the nuget repository to your project's dependencies. For an example of calling an extension method, you can look at the code of the corresponding test class [NthRootExtensionTests](TheSquid.Numerics.Extensions.Tests/NthRootExtensionTests.cs).
 
 ### How to test
 You can start random NthRoot tests right after clone repository and build solution. You must run generate tests and rebuild solution before start speed Nth root tests.
@@ -24,7 +24,7 @@ The extension method uses two root calculation algorithms: well-known Newton's m
 C# implementation of an extension method to generate random BigInteger value within the specified range.
 
 ### How to use
-Basicly you can copy class [NextBigIntegerExtension](TheSquid.Numerics.Extensions/NextBigIntegerExtension.cs) to your project and add using for namespace TheSquid.Numerics.Extensions.
+Basicly you can copy class [NextBigIntegerExtension](TheSquid.Numerics.Extensions/NextBigIntegerExtension.cs) to your project and add using namespace TheSquid.Numerics.Extensions. Another option is to add the "TheSquid.Numerics.Extensions" package from the nuget repository to your project's dependencies. For an example of calling an extension method, you can look at the code of the corresponding test class [NextBigIntegerExtensionTests](TheSquid.Numerics.Extensions.Tests/NextBigIntegerExtensionTests.cs).
 
 ### How to test
 You can start random NextBigInteger tests from project TheSquid.Numerics.Extensions.Tests right after clone repository and build solution.
@@ -36,7 +36,7 @@ Extension method for the system class Random. Method uses instance of Random cla
 C# implementation of an extension method for calculating powers of repeating BigInteger values using a cache.
 
 ### How to use
-Basicly you can copy class [PowCachedExtension](TheSquid.Numerics.Extensions/PowCachedExtension.cs) to your project and add using for namespace TheSquid.Numerics.Extensions.
+Basicly you can copy class [PowCachedExtension](TheSquid.Numerics.Extensions/PowCachedExtension.cs) to your project and add using namespace TheSquid.Numerics.Extensions. Another option is to add the "TheSquid.Numerics.Extensions" package from the nuget repository to your project's dependencies. For an example of calling an extension method, you can look at the code of the corresponding test class [PowCachedExtensionTests](TheSquid.Numerics.Extensions.Tests/PowCachedExtensionTests.cs).
 
 ### How to test
 You can start random PowCached tests from project TheSquid.Numerics.Extensions.Tests right after clone repository and build solution.
