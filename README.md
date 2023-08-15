@@ -1,5 +1,5 @@
 # TheSquid.Numerics.Extensions
-[![GitHub Status](https://img.shields.io/github/actions/workflow/status/TheSquidCombatant/TheSquid.Numerics.Extensions/push-main-not-version.yml)](https://github.com/TheSquidCombatant/TheSquid.Numerics.Extensions)
+[![GitHub Status](https://img.shields.io/github/actions/workflow/status/TheSquidCombatant/TheSquid.Numerics.Extensions/push-main-not-version.yml?cacheSeconds=60)](https://github.com/TheSquidCombatant/TheSquid.Numerics.Extensions)
 [![NuGet Version](http://img.shields.io/nuget/v/TheSquid.Numerics.Extensions.svg?style=flat&color=green)](https://www.nuget.org/packages/TheSquid.Numerics.Extensions/)
 
 C# implementation of extension methods for BigInteger data type. Such as extracting an Nth root, generating a random value, and so on. By Nikolai TheSquid.
