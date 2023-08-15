@@ -1,5 +1,5 @@
-name: push-main-not-version
-run-name: build branch main
+name: main ci/cd
+run-name: push-main-not-version
 on:
   push:
     branches:

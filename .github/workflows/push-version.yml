@@ -1,5 +1,5 @@
-name: push-version
-run-name: build version
+name: version ci/cd
+run-name: push-version
 on:
   push:
     tags:
