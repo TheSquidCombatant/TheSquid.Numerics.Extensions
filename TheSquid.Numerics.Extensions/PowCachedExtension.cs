@@ -47,7 +47,7 @@ namespace TheSquid.Numerics
         /// Power degree value.
         /// </param>
         /// <returns>
-        /// The result of raising <param name="basement"> to the <param name="exponent"> power.
+        /// The result of raising basement to the exponent power.
         /// </returns>
         public static BigInteger Pow(this ref BigInteger basement, int exponent)
         {
@@ -64,7 +64,7 @@ namespace TheSquid.Numerics
         /// Power degree value.
         /// </param>
         /// <returns>
-        /// The result of raising <param name="basement"> to the <param name="exponent"> power.
+        /// The result of raising basement to the exponent power.
         /// </returns>
         public static BigInteger PowCached(this ref BigInteger basement, int exponent)
         {
@@ -137,7 +137,7 @@ namespace TheSquid.Numerics
         /// Input lifetime value, all elements less than which will be considered obsolete
         /// and removed. Or input a zero to clear the cache completely.
         /// </param>
-        /// <<remarks>
+        /// <remarks>
         /// Associated lifetime values in the ItemsLifetime property.
         /// </remarks>
         public static void ShrinkCacheData(long lifetimeLimit)
