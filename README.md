@@ -1,5 +1,4 @@
 # TheSquid.Numerics.Extensions
-[![GitHub Status](https://img.shields.io/github/actions/workflow/status/TheSquidCombatant/TheSquid.Numerics.Extensions/push-main-not-version.yml?cacheSeconds=60)](https://github.com/TheSquidCombatant/TheSquid.Numerics.Extensions)
 [![GitHub Status](https://github.com/TheSquidCombatant/TheSquid.Numerics.Extensions/actions/workflows/push-main-not-version.yml/badge.svg)](https://github.com/TheSquidCombatant/TheSquid.Numerics.Extensions)
 [![NuGet Version](http://img.shields.io/nuget/v/TheSquid.Numerics.Extensions.svg?style=flat&color=green)](https://www.nuget.org/packages/TheSquid.Numerics.Extensions/)
 
@@ -19,7 +18,7 @@ You can start random NthRoot tests right after clone repository and build soluti
 ### How to understand
 The extension method uses two root calculation algorithms: well-known Newton's method and digit-by-digit method. As the degree of the root increases, the calculation by the Newton method slows down, and the digit-by-digit method accelerates. With a root radicand value order of 100,000 decimal digits, the dependence of the calculation speed on the degree of the root is as follows:
 
-![pow comparison](https://github.com/TheSquidCombatant/NthRootExtension/assets/102874947/6d63160a-b02c-40dd-85b9-43f7b5f8c9e3)
+![root comparison](https://github.com/TheSquidCombatant/NthRootExtension/assets/102874947/6d63160a-b02c-40dd-85b9-43f7b5f8c9e3)
 
 ## NextBigIntegerExtension
 C# implementation of an extension method to generate random BigInteger value within the specified range.
