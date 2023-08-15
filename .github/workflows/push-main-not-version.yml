@@ -1,5 +1,5 @@
-name: push-main-github-actions
-run-name: push-main-github-actions
+name: push-main-not-version
+run-name: build branch main
 on:
   push:
     branches:

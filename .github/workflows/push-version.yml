@@ -1,5 +1,5 @@
-name: push-tag-github-actions
-run-name: push-tag-github-actions
+name: push-version
+run-name: build version
 on:
   push:
     tags:

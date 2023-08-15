@@ -1,5 +1,5 @@
-name: push-not-main-github-actions
-run-name: push-not-main-github-actions
+name: push-not-main-not-version
+run-name: build branch not main
 on:
   push:
     branches-ignore:

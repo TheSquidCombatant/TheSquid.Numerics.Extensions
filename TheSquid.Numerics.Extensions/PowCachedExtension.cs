@@ -40,8 +40,12 @@ namespace TheSquid.Numerics
         /// <summary>
         /// Wrapper over the standard exponentiation method.
         /// </summary>
-        /// <param name="basement">Power base value.</param>
-        /// <param name="exponent">Power degree value.</param>
+        /// <param name="basement">
+        /// Power base value.
+        /// </param>
+        /// <param name="exponent">
+        /// Power degree value.
+        /// </param>
         /// <returns>
         /// The result of raising <param name="basement"> to the <param name="exponent"> power.
         /// </returns>
@@ -53,8 +57,12 @@ namespace TheSquid.Numerics
         /// <summary>
         /// Exponentiation method with result caching.
         /// </summary>
-        /// <param name="basement">Power base value.</param>
-        /// <param name="exponent">Power degree value.</param>
+        /// <param name="basement">
+        /// Power base value.
+        /// </param>
+        /// <param name="exponent">
+        /// Power degree value.
+        /// </param>
         /// <returns>
         /// The result of raising <param name="basement"> to the <param name="exponent"> power.
         /// </returns>
@@ -125,7 +133,13 @@ namespace TheSquid.Numerics
         /// <summary>
         /// Shrink the dataset of cached power values.
         /// </summary>
-        /// <param name="lifetimeLimit">How new items must stay in cache.</param>
+        /// <param name="lifetimeLimit">
+        /// Input lifetime value, all elements less than which will be considered obsolete
+        /// and removed. Or input a zero to clear the cache completely.
+        /// </param>
+        /// <<remarks>
+        /// Associated lifetime values in the ItemsLifetime property.
+        /// </remarks>
         public static void ShrinkCacheData(long lifetimeLimit)
         {
             lock (syncObject)
