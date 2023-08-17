@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 
@@ -15,7 +14,7 @@ namespace TheSquid.Numerics
         /// <summary>
         /// Cach with format: basement, exponent, power, counter. 
         /// </summary>
-        private static Dictionary<BigInteger, Dictionary<int, ValueTuple<BigInteger, long>>> powCache;
+        private static Dictionary<ValueTuple<BigInteger, int>, ValueTuple<BigInteger, long>> powCache;
 
         /// <summary>
         /// Cache access synchronization object.
@@ -23,18 +22,23 @@ namespace TheSquid.Numerics
         private static Object syncObject;
 
         /// <summary>
-        /// Life time counter for shrink data when it is needed.
+        /// Life time counter for sort items by age.
         /// </summary>
-        public static long ItemsLifetime { get; private set; }
+        private static long itemsLifetime;
+
+        /// <summary>
+        /// Number of items in the cache.
+        /// </summary>
+        public static long ItemsInCache => powCache.LongCount();
 
         /// <summary>
         /// Static constuctor.
         /// </summary>
         static PowCachedExtension()
         {
-            powCache = new Dictionary<BigInteger, Dictionary<int, ValueTuple<BigInteger, long>>>();
+            powCache = new Dictionary<ValueTuple<BigInteger, int>, ValueTuple<BigInteger, long>>();
             syncObject = new Object();
-            ItemsLifetime = 0;
+            itemsLifetime = 0;
         }
 
         /// <summary>
@@ -72,12 +76,12 @@ namespace TheSquid.Numerics
             {
                 try
                 {
-                    if (ItemsLifetime >= int.MaxValue) ShrinkCacheData(ItemsLifetime / 2);
+                    if (itemsLifetime >= int.MaxValue) ShrinkCacheData(powCache.LongCount() / 2);
                     return CalculateNewValue(ref basement, exponent);
                 }
                 catch (OutOfMemoryException)
                 {
-                    if (powCache.Count > 0) ShrinkCacheData(0);
+                    if (powCache.LongCount() > 0) ShrinkCacheData(0);
                     return CalculateNewValue(ref basement, exponent);
                 }
             }
@@ -88,9 +92,10 @@ namespace TheSquid.Numerics
         /// </summary>
         private static bool TryGetValue(ref BigInteger basement, int exponent, out BigInteger power)
         {
-            if (!powCache.TryGetValue(basement, out var termCache)) return false;
-            if (!termCache.TryGetValue(exponent, out var itemCache)) return false;
-            power = itemCache.Item1;
+            var key = new ValueTuple<BigInteger, int>(basement, exponent);
+            if (!powCache.TryGetValue(key, out var value)) return false;
+            value.Item2 = ++itemsLifetime;
+            power = value.Item1;
             return true;
         }
 
@@ -99,17 +104,9 @@ namespace TheSquid.Numerics
         /// </summary>
         private static void CacheNewValue(ref BigInteger basement, int exponent, BigInteger power)
         {
-            if (!powCache.TryGetValue(basement, out var termCache))
-            {
-                termCache = new Dictionary<int, ValueTuple<BigInteger, long>>();
-                powCache.Add(basement, termCache);
-            }
-            if (!termCache.TryGetValue(exponent, out var itemCache))
-            {
-                itemCache = new ValueTuple<BigInteger, long>(power, ++ItemsLifetime);
-                termCache.Add(exponent, itemCache);
-            }
-            else itemCache.Item2 = ++ItemsLifetime;
+            var key = new ValueTuple<BigInteger, int>(basement, exponent);
+            var value = new ValueTuple<BigInteger, long>(power, ++itemsLifetime);
+            powCache.Add(key, value);
         }
 
         /// <summary>
@@ -133,39 +130,31 @@ namespace TheSquid.Numerics
         /// <summary>
         /// Shrink the dataset of cached power values.
         /// </summary>
-        /// <param name="lifetimeLimit">
-        /// Input lifetime value, all elements less than which will be considered obsolete
-        /// and removed. Or input a zero to clear the cache completely.
+        /// <param name="itemsInCache">
+        /// The number of newest elements left in the cache. Input zero to clear the cache completely.
         /// </param>
         /// <remarks>
-        /// Associated lifetime values in the ItemsLifetime property.
+        /// Associated items count value in the ItemsCount property.
         /// </remarks>
-        public static void ShrinkCacheData(long lifetimeLimit)
+        public static void ShrinkCacheData(long itemsInCache)
         {
             lock (syncObject)
             {
-                if (lifetimeLimit == 0)
+                if (itemsInCache == 0)
                 {
-                    if (ItemsLifetime == 0) return;
-                    ItemsLifetime = 0;
+                    if (powCache.LongCount() == 0) return;
+                    itemsLifetime = 0;
                     powCache.Clear();
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
-                    Debug.WriteLine($"{nameof(TheSquid.Numerics)}.{nameof(PowCachedExtension)}.{nameof(ShrinkCacheData)}");
                 }
                 else
                 {
-                    var newPowCache = new Dictionary<BigInteger, Dictionary<int, ValueTuple<BigInteger, long>>>();
-                    ItemsLifetime = 0;
-                    foreach (var p in powCache)
-                    {
-                        var newTermCache = p.Value
-                            .Where(t => t.Value.Item2 > lifetimeLimit)
-                            .Select(t => new KeyValuePair<int, ValueTuple<BigInteger, long>>(t.Key, new ValueTuple<BigInteger, long>(t.Value.Item1, ++ItemsLifetime)))
-                            .ToDictionary(t => t.Key, t => t.Value);
-                        if (newTermCache.Count > 0) newPowCache.Add(p.Key, newTermCache);
-                    }
-                    powCache = newPowCache;
+                    itemsLifetime = 0;
+                    powCache = powCache
+                        .OrderBy(p => p.Value.Item2)
+                        .Skip((int)Math.Min(powCache.LongCount() - itemsInCache, int.MaxValue))
+                        .ToDictionary(p => p.Key, p => new ValueTuple<BigInteger, long>(p.Value.Item1, ++itemsLifetime));
                 }
             }
         }
