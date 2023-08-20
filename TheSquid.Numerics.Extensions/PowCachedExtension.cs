@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace TheSquid.Numerics
 {
@@ -15,11 +16,6 @@ namespace TheSquid.Numerics
         /// Cach with format: basement, exponent, power, counter. 
         /// </summary>
         private static Dictionary<ValueTuple<BigInteger, int>, ValueTuple<BigInteger, long>> powCache;
-
-        /// <summary>
-        /// Cache access synchronization object.
-        /// </summary>
-        private static Object syncObject;
 
         /// <summary>
         /// Life time counter for sort items by age.
@@ -37,7 +33,6 @@ namespace TheSquid.Numerics
         static PowCachedExtension()
         {
             powCache = new Dictionary<ValueTuple<BigInteger, int>, ValueTuple<BigInteger, long>>();
-            syncObject = new Object();
             itemsLifetime = 0;
         }
 
@@ -70,28 +65,27 @@ namespace TheSquid.Numerics
         /// <returns>
         /// The result of raising basement to the exponent power.
         /// </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public static BigInteger PowCached(this ref BigInteger basement, int exponent)
         {
-            lock (syncObject)
+            try
             {
-                try
-                {
-                    const string negativeExponentMessage = "Negative exponent values are not supported.";
-                    if (exponent < 0) throw new ArgumentOutOfRangeException(negativeExponentMessage);
-                    if (itemsLifetime >= int.MaxValue) ShrinkCacheData(powCache.LongCount() / 2);
-                    return CalculateNewValue(ref basement, exponent);
-                }
-                catch (OutOfMemoryException)
-                {
-                    if (powCache.LongCount() > 0) ShrinkCacheData(0);
-                    return CalculateNewValue(ref basement, exponent);
-                }
+                const string negativeExponentMessage = "Negative exponent values are not supported.";
+                if (exponent < 0) throw new ArgumentOutOfRangeException(negativeExponentMessage);
+                if (itemsLifetime >= int.MaxValue) ShrinkCacheData(powCache.LongCount() / 2);
+                return CalculateNewValue(ref basement, exponent);
+            }
+            catch (OutOfMemoryException)
+            {
+                if (powCache.LongCount() > 0) ShrinkCacheData(0);
+                return CalculateNewValue(ref basement, exponent);
             }
         }
 
         /// <summary>
         /// Get power result from cache.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool TryGetValue(ref BigInteger basement, int exponent, out BigInteger power)
         {
             var key = new ValueTuple<BigInteger, int>(basement, exponent);
@@ -104,6 +98,7 @@ namespace TheSquid.Numerics
         /// <summary>
         /// Put power result to cache.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void CacheNewValue(ref BigInteger basement, int exponent, BigInteger power)
         {
             var key = new ValueTuple<BigInteger, int>(basement, exponent);
@@ -114,6 +109,7 @@ namespace TheSquid.Numerics
         /// <summary>
         /// Calculate new power value.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static BigInteger CalculateNewValue(ref BigInteger basement, int exponent)
         {
             if (exponent == 0) return 1;
@@ -138,26 +134,24 @@ namespace TheSquid.Numerics
         /// <remarks>
         /// Associated items count value in the ItemsCount property.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public static void ShrinkCacheData(long itemsInCache)
         {
-            lock (syncObject)
+            if (itemsInCache == 0)
             {
-                if (itemsInCache == 0)
-                {
-                    if (powCache.LongCount() == 0) return;
-                    itemsLifetime = 0;
-                    powCache.Clear();
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                }
-                else
-                {
-                    itemsLifetime = 0;
-                    powCache = powCache
-                        .OrderBy(p => p.Value.Item2)
-                        .Skip((int)Math.Min(powCache.LongCount() - itemsInCache, int.MaxValue))
-                        .ToDictionary(p => p.Key, p => new ValueTuple<BigInteger, long>(p.Value.Item1, ++itemsLifetime));
-                }
+                if (powCache.LongCount() == 0) return;
+                itemsLifetime = 0;
+                powCache.Clear();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+            else
+            {
+                itemsLifetime = 0;
+                powCache = powCache
+                    .OrderBy(p => p.Value.Item2)
+                    .Skip((int)Math.Min(powCache.LongCount() - itemsInCache, int.MaxValue))
+                    .ToDictionary(p => p.Key, p => new ValueTuple<BigInteger, long>(p.Value.Item1, ++itemsLifetime));
             }
         }
     }
