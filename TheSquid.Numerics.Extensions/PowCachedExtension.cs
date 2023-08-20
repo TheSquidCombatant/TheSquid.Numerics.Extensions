@@ -76,6 +76,8 @@ namespace TheSquid.Numerics
             {
                 try
                 {
+                    const string negativeExponentMessage = "Negative exponent values are not supported.";
+                    if (exponent < 0) throw new ArgumentOutOfRangeException(negativeExponentMessage);
                     if (itemsLifetime >= int.MaxValue) ShrinkCacheData(powCache.LongCount() / 2);
                     return CalculateNewValue(ref basement, exponent);
                 }
