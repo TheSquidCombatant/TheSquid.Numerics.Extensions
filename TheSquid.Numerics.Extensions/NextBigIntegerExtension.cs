@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Numerics;
 
-namespace TheSquid.Numerics
+namespace TheSquid.Numerics.Extensions
 {
     /// <summary>
     /// C# implementation of an extension method to generate

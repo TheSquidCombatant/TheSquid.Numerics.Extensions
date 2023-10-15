@@ -4,7 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 
-namespace TheSquid.Numerics
+namespace TheSquid.Numerics.Extensions
 {
     /// <summary>
     /// C# implementation of an extension method for calculating powers 
@@ -88,6 +88,7 @@ namespace TheSquid.Numerics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool TryGetValue(ref BigInteger basement, int exponent, out BigInteger power)
         {
+            power = BigInteger.Zero;
             var key = new ValueTuple<BigInteger, int>(basement, exponent);
             if (!powCache.TryGetValue(key, out var value)) return false;
             value.Item2 = ++itemsLifetime;
@@ -112,14 +113,15 @@ namespace TheSquid.Numerics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static BigInteger CalculateNewValue(ref BigInteger basement, int exponent)
         {
+            // results for well known parameter values
             if (exponent == 0) return 1;
             if (basement == 0) return 0;
             if (exponent == 1) return basement;
             if (TryGetValue(ref basement, exponent, out var power)) return power;
-
+            // devide power for using exponentiation with large number of cache hits
             var left = exponent / 2;
             var right = exponent - left;
-
+            // recursive use of the exponentiation schema
             var result = CalculateNewValue(ref basement, left) * CalculateNewValue(ref basement, right);
             CacheNewValue(ref basement, exponent, result);
             return result;
@@ -132,7 +134,7 @@ namespace TheSquid.Numerics
         /// The number of newest elements left in the cache. Input zero to clear the cache completely.
         /// </param>
         /// <remarks>
-        /// Associated items count value in the ItemsCount property.
+        /// Associated items count value in the ItemsInCache property.
         /// </remarks>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void ShrinkCacheData(long itemsInCache)

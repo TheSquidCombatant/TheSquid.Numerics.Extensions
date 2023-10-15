@@ -3,7 +3,7 @@ using System;
 using System.Numerics;
 using System.Text;
 
-namespace TheSquid.Numerics.Tests
+namespace TheSquid.Numerics.Extensions.Tests
 {
     [TestClass]
     public class NextBigIntegerExtensionTests

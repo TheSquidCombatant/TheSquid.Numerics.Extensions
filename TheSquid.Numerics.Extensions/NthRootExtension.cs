@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 
-namespace TheSquid.Numerics
+namespace TheSquid.Numerics.Extensions
 {
     /// <summary>
     /// C# implementation of an extension method to quickly calculate an Nth root
@@ -43,7 +43,7 @@ namespace TheSquid.Numerics
             isExactResult = true;
             if ((source == 0) || (source == 1)) return source;
             // base of the numeral system, the value 10 is best for traceability and easу debugging
-            var floor = 10;
+            const int floor = 10;
             // calculate the worst-case cost for each root extraction method
             var quotient = (int)Math.Ceiling(BigInteger.Log(source, floor) / exponent);
             var digitsRootCount = (int)(0.8 * quotient * (BigInteger.Log(floor, 2) + 1));
@@ -66,7 +66,7 @@ namespace TheSquid.Numerics
         private static BigInteger GetRootByDigits(this ref BigInteger source, int exponent, out bool isExactResult)
         {
             // calculate how many digits of accuracy are cut off from the radicand value for each digit of root value
-            var floor = 10;
+            const int floor = 10;
             var digitsShift = BigInteger.Pow(floor, exponent);
             var currentSource = source;
             var intermediateResults = new LinkedList<BigInteger>();
@@ -132,7 +132,7 @@ namespace TheSquid.Numerics
         private static BigInteger GetRootByNewton(this ref BigInteger source, int exponent, out bool isExactResult)
         {
             // calculate the initial guess (equal or greater) the root value with accuracy up to one digit
-            var floor = 10;
+            const int floor = 10;
             var quotient = (int)Math.Ceiling(BigInteger.Log(source, floor) / exponent);
             var currentResult = BigInteger.Pow(floor, quotient);
             // initial setting for applying Newton's method

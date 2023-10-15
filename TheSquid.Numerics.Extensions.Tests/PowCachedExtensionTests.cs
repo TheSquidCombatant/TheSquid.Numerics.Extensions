@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Numerics;
 
-namespace TheSquid.Numerics.Tests
+namespace TheSquid.Numerics.Extensions.Tests
 {
     [TestClass]
     public class PowCachedExtensionTests
