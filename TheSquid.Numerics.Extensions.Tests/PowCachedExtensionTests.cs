@@ -8,6 +8,9 @@ namespace TheSquid.Numerics.Extensions.Tests
     [TestClass]
     public class PowCachedExtensionTests
     {
+        /// <summary>
+        /// Checks that any value calculated using caching exponentiation matches the value calculated by the standard method.
+        /// </summary>
         [TestMethod]
         [DataRow(10000, 100, 100)]
         [DataRow(100000, 100, 100)]

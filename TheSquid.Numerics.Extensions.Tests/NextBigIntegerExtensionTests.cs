@@ -8,6 +8,9 @@ namespace TheSquid.Numerics.Extensions.Tests
     [TestClass]
     public class NextBigIntegerExtensionTests
     {
+        /// <summary>
+        /// Checks that all generated values are within the specified range.
+        /// </summary>
         [TestMethod]
         [DataRow(100, 10000)]
         [DataRow(1000, 1000)]

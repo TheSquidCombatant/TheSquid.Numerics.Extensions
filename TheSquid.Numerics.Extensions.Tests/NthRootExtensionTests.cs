@@ -9,6 +9,9 @@ namespace TheSquid.Numerics.Extensions.Tests
     [TestClass]
     public class NthRootExtensionTests
     {
+        /// <summary>
+        /// Checks that any value obtained when extracting the root coincides with the value previously raised to a power.
+        /// </summary>
         [TestMethod]
         [DataRow(10000, 1000, 1000)]
         [DataRow(10000, 10000, 100)]
