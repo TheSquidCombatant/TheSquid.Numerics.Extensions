@@ -32,12 +32,13 @@ namespace TheSquid.Numerics.Extensions
             const string maxCannotBeLessMessage = "Max value can not be less then min value.";
             if (max < min) throw new ArgumentOutOfRangeException(maxCannotBeLessMessage);
             var residual = max - min;
+            if (residual == 0) return max;
             var buffer = residual.ToByteArray();
             random.NextBytes(buffer);
             var multiplier = new BigInteger(buffer);
-            var addendum = residual & multiplier;
-            if (addendum < 0) addendum *= -1;
-            return min + addendum;
+            if (multiplier < 0) multiplier *= -1;
+            if (multiplier > residual) multiplier %= residual;
+            return min + multiplier;
         }
     }
 }
