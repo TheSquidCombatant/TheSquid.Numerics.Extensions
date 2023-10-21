@@ -116,15 +116,26 @@ namespace TheSquid.Numerics.Extensions
             // results for well known parameter values
             if (exponent == 0) return 1;
             if (basement == 0) return 0;
+            if (basement == 1) return 1;
             if (exponent == 1) return basement;
             if (TryGetValue(ref basement, exponent, out var power)) return power;
-            // devide power for using exponentiation with large number of cache hits
-            var left = exponent / 2;
-            var right = exponent - left;
-            // recursive use of the exponentiation schema
-            var result = CalculateNewValue(ref basement, left) * CalculateNewValue(ref basement, right);
-            CacheNewValue(ref basement, exponent, result);
-            return result;
+            // result for right (smaller) exponent via cached result for left (bigger) part
+            if (TryGetValue(ref basement, exponent - 1, out var powerless))
+            {
+                var result = powerless * basement;
+                CacheNewValue(ref basement, exponent, result);
+                return result;
+            }
+            else
+            {
+                // devide power for using exponentiation with large number of cache hits
+                var left = exponent / 2;
+                var right = exponent - left;
+                // recursive use of the exponentiation schema
+                var result = CalculateNewValue(ref basement, left) * CalculateNewValue(ref basement, right);
+                CacheNewValue(ref basement, exponent, result);
+                return result;
+            }
         }
 
         /// <summary>
