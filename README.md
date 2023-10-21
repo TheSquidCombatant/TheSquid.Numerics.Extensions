@@ -6,7 +6,7 @@ C# implementation of extension methods for BigInteger data type. Such as extract
 
 I will be glad to merge your pull requests for improve calculation performance. Even if the improvement affects only individual cases from the range of values.
 
-To use these extensions you will need to add to your code following namespaces: System.Numerics and TheSquid.Numerics.Extensions.
+To use these extensions you will need to add to your code following namespaces: `System.Numerics` and `TheSquid.Numerics.Extensions`.
 
 ## NthRootExtension
 C# implementation of an extension method to quickly calculate an Nth root (including square root) for BigInteger value.
@@ -16,9 +16,9 @@ Basicly you can copy class [NthRootExtension](TheSquid.Numerics.Extensions/NthRo
 
 Usage example:
 ```csharp
-var exponent = int.Parse(Console.ReadLine());
 var source = BigInteger.Parse(Console.ReadLine());
-var basement = source.NthRoot(exponent, out var isExactResult);
+var exponent = int.Parse(Console.ReadLine());
+var root = source.NthRoot(exponent, out var isExactResult);
 ```
 
 ### How to test
@@ -37,9 +37,9 @@ Basicly you can copy class [NextBigIntegerExtension](TheSquid.Numerics.Extension
 
 Usage example:
 ```csharp
-var basement = BigInteger.Parse(Console.ReadLine());
+var source = BigInteger.Parse(Console.ReadLine());
 var exponent = int.Parse(Console.ReadLine());
-var pow = basement.PowCached(exponent);
+var power = source.PowCached(exponent);
 ```
 
 ### How to test
@@ -49,7 +49,7 @@ You can start random tests for NextBigInteger extension method using NextBigInte
 Extension method for the system class Random. Method uses instance of Random class to generate an array of random bytes.
 
 ## PowCachedExtension
-C# implementation of an extension method for calculating powers of repeating BigInteger values using a cache.
+C# implementation of an extension method for faster calculation of powers with repeated parameters using cache.
 
 ### How to use
 Basicly you can copy class [PowCachedExtension](TheSquid.Numerics.Extensions/PowCachedExtension.cs) from source repository to your project. Another option is to add the [TheSquid.Numerics.Extensions](https://www.nuget.org/packages/TheSquid.Numerics.Extensions/) package from the nuget repository to your project's dependencies.
@@ -61,8 +61,17 @@ var max = BigInteger.Parse(Console.ReadLine());
 var random = new Random(DateTime.Now.Millisecond).NextBigInteger(min, max);
 ```
 
+Pow cache clears itself automatically. Firstly, if out of memory error occurs when calculating the power. Then the cache will be cleared completely. Secondly, if the number of elements in the cache reaches the number of `int.MaxValue`. Then the cache will be cleared by half. Additionally, you can check the number of elements in the cache and clear it manually, leaving a specified number of elements.
+
+Usage example:
+```csharp
+var available = PowCachedExtension.ItemsInCache;
+var threshold = long.Parse(Console.ReadLine());
+if (threshold < available) PowCachedExtension.ShrinkCacheData(threshold);
+```
+
 ### How to test
-You can start random tests for PowCached extension method using PowCachedExtensionTests class from project project TheSquid.Numerics.Extensions.Tests right after clone repository and build solution.
+You can start random tests for PowCached extension method using PowCachedExtensionTests class from project TheSquid.Numerics.Extensions.Tests right after clone repository and build solution.
 
 ### How to understand
 Acceleration is achieved by memorizing results of computing degrees, as well as memorizing the intermediate results obtained in calculation progress. With random basement values in range from 0 to 1000, random exponent values in range from 0 to 1000 and iterations count up to 2000000, the dependence of the calculation speed on cache filling is as follows:
