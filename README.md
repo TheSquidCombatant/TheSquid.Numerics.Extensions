@@ -37,9 +37,9 @@ Basicly you can copy class [NextBigIntegerExtension](TheSquid.Numerics.Extension
 
 Usage example:
 ```csharp
-var source = BigInteger.Parse(Console.ReadLine());
-var exponent = int.Parse(Console.ReadLine());
-var power = source.PowCached(exponent);
+var min = BigInteger.Parse(Console.ReadLine());
+var max = BigInteger.Parse(Console.ReadLine());
+var random = new Random(DateTime.Now.Millisecond).NextBigInteger(min, max);
 ```
 
 ### How to test
@@ -56,9 +56,9 @@ Basicly you can copy class [PowCachedExtension](TheSquid.Numerics.Extensions/Pow
 
 Usage example:
 ```csharp
-var min = BigInteger.Parse(Console.ReadLine());
-var max = BigInteger.Parse(Console.ReadLine());
-var random = new Random(DateTime.Now.Millisecond).NextBigInteger(min, max);
+var source = BigInteger.Parse(Console.ReadLine());
+var exponent = int.Parse(Console.ReadLine());
+var power = source.PowCached(exponent);
 ```
 
 Pow cache clears itself automatically. Firstly, if out of memory error occurs when calculating the power. Then the cache will be cleared completely. Secondly, if the number of elements in the cache reaches the number of `int.MaxValue`. Then the cache will be cleared by half. Additionally, you can check the number of elements in the cache and clear it manually, leaving a specified number of elements.
