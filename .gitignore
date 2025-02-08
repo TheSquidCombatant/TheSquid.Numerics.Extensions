@@ -1,8 +1,9 @@
 TheSquid.Numerics.Extensions/bin/
 TheSquid.Numerics.Extensions/obj/
 TheSquid.Numerics.Extensions.Tests/bin/
-TheSquid.Numerics.Extensions.Tests/Data/
 TheSquid.Numerics.Extensions.Tests/obj/
+TheSquid.Numerics.Extensions.Benchmark/bin/
+TheSquid.Numerics.Extensions.Benchmark/obj/
 TestResults/
 .vs/
 *.user
